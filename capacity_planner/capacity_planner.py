@@ -12,7 +12,7 @@ class CapacityPlanner(TiDBCluster):
     def __init__(self, conf):
         super().__init__(conf)
         self.logger = logger.setup_logger(__name__, self.conf['logging']['file_name'], self.conf['logging']['level'])
-        self.csv_file_name = "data/{}_capacity_plan_{}.csv".format(self.conf['cluster_info']['cluster_id'], self.conf['time'])
+        self.csv_file_name = "data/{}_capacity_plan_watermark{}_{}.csv".format(self.conf['cluster_info']['cluster_id'], self.conf['capacity']['plan_resource_redundancy_x'],self.conf['time'])
         self.csv_file_fields = ['component', 'name', 'max', 'average', 'percentile_50.0', 'percentile_75.0', "percentile_80.0",
                        "percentile_85.0", "percentile_90.0", "percentile_95.0", 'percentile_99.0', 'percentile_99.9',
                        'capacity', 'instance_cnt', 'plan_max', 'plan_average', 'plan_percentile_50.0',
@@ -211,4 +211,3 @@ class CapacityPlanner(TiDBCluster):
             self.logger.info("Completed. Please find the capacity plan in {}".format(self.csv_file_name))
         else:
             self.logger.info("No capacity plan generated.")
-

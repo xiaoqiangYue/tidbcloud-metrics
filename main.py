@@ -2,6 +2,7 @@ import sys
 import datetime
 from health_checker.health_checker import HealthChecker
 from utils.logger import setup_logger
+from utils import helpers
 from tidb_cluster.configer import Configer
 from capacity_planner.capacity_planner import CapacityPlanner
 from tidb_cluster.tidb_cluster import TiDBCluster
@@ -28,8 +29,14 @@ def cluster_info(business):
     clusters = tidb_cluster.get_dedicated_clusters_by_tenant_from_k8s()
     clusters_instance_type = tidb_cluster.get_clusters_basic_info_by_tenant_from_k8s()
     # 2. 遍历 clusters，收集硬件指标(组件，对应机型，节点数)和 QPS
-    end_time = datetime.datetime.now()
-    start_time = end_time - datetime.timedelta(days=1)
+
+    # conf['capacity']['cluster_list']
+    
+    # end_time = datetime.datetime.now()
+    # start_time = end_time - datetime.timedelta(days=1)
+
+    end_time = helpers.convert_datetime(conf['prometheus']['end_time'])
+    start_time = helpers.convert_datetime(conf['prometheus']['start_time'])
     operations=['max']
     clusters_qps_and_nodecount = tidb_cluster.get_basic_info_by_clusters(clusters,start_time,end_time,operations)
 
@@ -84,8 +91,18 @@ def cluster_info(business):
 def capacity(mode):
     if mode == 'all' or mode == 'node':
         click.confirm("Have you connected to FeiLian?", abort=True)
-    capacity_planner = CapacityPlanner(conf)
-    capacity_planner.generate_capacity_plan(mode)
+    # 1. 遍历 cluster list
+    # 2. 遍历 water list
+    # 3. 每种组合赋值 conf 集群信息
+    # 4. 调用 generate_capacity_plan
+    cluster_list=conf['capacity']['cluster_list']
+    watermark_list=conf['capacity']['plan_resource_redundancy_x_list']
+    for c in cluster_list:
+        for w in watermark_list:
+            conf['cluster_info']['cluster_id'] = c
+            conf['capacity']['plan_resource_redundancy_x']=w
+            capacity_planner = CapacityPlanner(conf)
+            capacity_planner.generate_capacity_plan(mode)
 
 
 @cli.command()
@@ -147,5 +164,3 @@ if __name__ == '__main__':
     logger = setup_logger(__name__, conf['logging']['file_name'], conf['logging']['level'])
     tidb_cluster = TiDBCluster(conf)
     cli()
-
-

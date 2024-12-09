@@ -65,12 +65,14 @@ if __name__ == '__main__':
     # print(client.custom_query('(time() - process_start_time_seconds{component="tidb"})'))
 # ----------------
 
-    # conf = Configer("tidbcloud.yaml").set_conf()
-    # logger = setup_logger(__name__, conf['logging']['file_name'], conf['logging']['level'])
-    # tidb_cluster = TiDBCluster(conf)
+    conf = Configer("tidbcloud.yaml").set_conf()
+    logger = setup_logger(__name__, conf['logging']['file_name'], conf['logging']['level'])
+    tidb_cluster = TiDBCluster(conf)
 
-    # get_url='https://linguflow.pingcap.net/linguflow-api/interactions/e27b9e07-4a59-409d-874c-8b91d7e6805d'
-    # ai_test = ai.ai.AI()
+    get_url='https://linguflow.pingcap.net/linguflow-api/interactions/e27b9e07-4a59-409d-874c-8b91d7e6805d'
+    ai_test = ai.ai.AI()
+    id=ai_test.post_request(["查询租户 1372813089209061633 下，所有集群的集群名称、集群 ID、集群版本"])
+    print(id)
     # data=ai_test.get_data_with_retry(input_id={'id':'e27b9e07-4a59-409d-874c-8b91d7e6805d'})
     # print(data)
 
