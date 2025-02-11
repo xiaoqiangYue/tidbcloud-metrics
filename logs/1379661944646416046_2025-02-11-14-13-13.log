@@ -1,2 +1,0 @@
-2025-02-11 14:13:26,391 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '13', 'tiflash': '8', 'tikv': '45'}
-2025-02-11 14:13:35,034 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '3', 'tiflash': '1', 'tikv': '3'}
