@@ -1,0 +1,26 @@
+2025-02-11 11:54:13,835 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '1', 'tikv': '3'}
+2025-02-11 11:54:23,581 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '4', 'tiflash': '1', 'tikv': '9'}
+2025-02-11 11:54:36,979 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '10', 'tiflash': '2', 'tikv': '15'}
+2025-02-11 11:54:44,380 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '25', 'tiflash': '4', 'tikv': '51'}
+2025-02-11 11:54:54,020 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '1', 'tiflash': '1', 'tikv': '3'}
+2025-02-11 11:55:01,015 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '13', 'tiflash': '10', 'tikv': '51'}
+2025-02-11 11:55:08,957 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '11', 'tikv': '30'}
+2025-02-11 11:55:15,480 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '12', 'tiflash': '10', 'tikv': '36'}
+2025-02-11 11:55:23,849 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '23', 'tiflash': '4', 'tikv': '54'}
+2025-02-11 11:55:35,038 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '20', 'tiflash': '3', 'tikv': '69'}
+2025-02-11 11:55:42,616 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '13', 'tiflash': '8', 'tikv': '45'}
+2025-02-11 11:55:52,253 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '18', 'tikv': '30'}
+2025-02-11 11:55:59,872 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '2', 'tikv': '6'}
+2025-02-11 11:56:06,066 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '3', 'tikv': '3'}
+2025-02-11 11:56:14,257 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '11', 'tiflash': '10', 'tikv': '39'}
+2025-02-11 11:56:22,552 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '3', 'tiflash': '1', 'tikv': '3'}
+2025-02-11 11:56:29,698 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '12', 'tikv': '18'}
+2025-02-11 11:56:40,447 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '2', 'tiflash': '1', 'tikv': '3'}
+2025-02-11 11:56:46,821 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '30', 'tiflash': '6', 'tikv': '75'}
+2025-02-11 11:56:55,217 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '1', 'tikv': '3'}
+2025-02-11 11:57:02,488 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '3', 'tiflash': '2', 'tikv': '3'}
+2025-02-11 11:57:09,861 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '1', 'tiflash': '1', 'tikv': '3'}
+2025-02-11 11:57:17,282 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '3', 'tikv': '3'}
+2025-02-11 11:57:24,913 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '2', 'tikv': '3'}
+2025-02-11 11:57:32,707 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '1', 'tikv': '3'}
+2025-02-11 11:57:39,372 - tidb_cluster.tidb_cluster - DEBUG - components get from cloud: {'pd': '3', 'tidb': '6', 'tiflash': '3', 'tikv': '9'}

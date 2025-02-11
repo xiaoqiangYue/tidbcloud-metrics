@@ -4,6 +4,7 @@ import requests
 from urllib import parse
 
 
+
 class Configer:
 
     def __init__(self, config_file):
@@ -115,7 +116,11 @@ class Configer:
                                           allow_none=False)
 
         tidbcloud_url = self.conf['tidbcloud']['authenticate_url']
-        headers_api_one = {"Origin": "https://tidbcloud.com"}
+        headers_api_one = {
+            "Origin": "https://tidbcloud.com",
+            "User-Agent":"PostmanRuntime/7.40.0",
+            "Connection":"keep-alive"
+            }
         body_api_one = {
             "username": self.conf['tidbcloud']['username'],
             "password": self.conf['tidbcloud']['password'],

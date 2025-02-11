@@ -13,6 +13,9 @@ import json
 import requests
 import utils
 import ai.ai
+from utils import logger, helpers
+import logging
+from prometheus.prom_class_promotion import PromotionPrometheusConnect
 
 # def deduplicate_dict_list(original_list, key):
 #     seen = set()
@@ -44,19 +47,35 @@ if __name__ == '__main__':
                                     #    headers=None)
     # print(client.custom_query(query='(time() - process_start_time_seconds{component="tidb"})'))                                   
     # cloud
-    # url='https://www.ds.us-east-1.aws.observability.tidbcloud.com/external/metrics/tidbcloud/tenant/1372813089209061633/project/1372813089454521730/application/1379661944646413610'
-    # token='eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJEWTNNVUpGTUVReU9VVTBSa0U1TXpCRk5rRkRRVEl3UkRNMU0wSXpNelJHUVRrMVFUbEZRZyJ9.eyJodHRwczovL3RpZGJjbG91ZC5jb20vbGFzdF9wYXNzd29yZF9yZXNldCI6IjIwMjQtMDctMThUMTI6MjY6NTYuMjA1WiIsImh0dHBzOi8vdGlkYmNsb3VkLmNvbS9sb2dpbl9yZWNlaXZlZF9hdCI6MTcyNTUzOTIzMzc1MCwibG9naW5faGFzX29yZyI6IjEiLCJsb2dpbl9vcmdfdHlwZSI6InBlcnNvbmFsIiwibG9naW5fb3JnX2lkIjoiMSIsImxvZ2luX2NvbXBhbnlfbmFtZSI6IiIsImVtYWlsIjoieXVlY2hhbmdxaWFuZ0BwaW5nY2FwLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczovL3RpZGIuYXV0aDAuY29tLyIsImF1ZCI6IjZJWnRoQ2ZtUktJUEVuUVNUOGFEYnRNN1NHZE1uaVJsIiwiaWF0IjoxNzI1NTM5MjMzLCJleHAiOjE3MjU1NzUyMzMsInN1YiI6ImF1dGgwfDYxY2E3MzY4ZTk1Njc1MDA2ODJhZDE4MiIsImF0X2hhc2giOiIwQ1FxNkdNMFB0ZmtLaC03ZG9TTW5RIiwic2lkIjoiQ1ZoX2RrbGw1c0RBV0dkbFlXUXZTUXZ3T25XUE5uSnYiLCJub25jZSI6IndEeWFUcmdzY1BTd3l0VU5LTVhDZUpHeUZOZXJ1TlBMIn0.O9IXssN9Si9VzKytOG-8-rnsKjxz4ClJ3FG6ct2fFPSTU1HqThAYC3fwF1OPIHPyqtYQYUEqFb7rtCj60zZRydT8mwRJ7jRv5LLbyq-oeA9emt1_HP-DPq4FY2DPO1KrFK4XuL8eadkhhtPozhkSt9-lE6KX_CrcEqrqByVfDTZHenrqziUtxmhCriQ_bgVB7Q2EyG3XnhUJIx3ebnidpOobpP6Y5m-CUzQ8AetVx1y1feET8uywsw7tEdRoytO7SJFmtlYxlNRor7dxkb1M3SKKZnYk-OoEISX2jG7L_u8WW6x8ZAaQTjEifrz5yllurzMeBjydXsEJ08onZRiPsQ'
-    # client = PrometheusConnect(url=url, disable_ssl=False,
-    #                                headers={"Authorization": "bearer {}".format(token)})
+    # https://www.ds.us-east-1.aws.observability.tidbcloud.com/external/metrics/tidbcloud/tenant/1372813089209061633/project/1372813089454544954/application/1379661944646416076
+    ###############
+    logging.basicConfig(level=logging.DEBUG)
+    logging.getLogger("requests.packages.urllib3").setLevel(logging.DEBUG)
+    # url='https://clinic.pingcap.com'
+    url='https://clinic.pingcap.com/clinic'
+    token='eyJrIjoiNHM4OTdkNHFheWZ0N3RodyIsInUiOjI0MCwiaWQiOjB9Cg=='
+    headers={
+        # "User-Agent": "PostmanRuntime/7.40.0",
+        "Authorization": "Bearer eyJrIjoiNHM4OTdkNHFheWZ0N3RodyIsInUiOjI0MCwiaWQiOjB9Cg==",
+        "X-OrgType":"op",
+        "X-OrgID":"1372813089196980697",
+        "X-ClusterID":"7245971497785794815"
+    }
+    # https://clinic.pingcap.com/clinic/api/v1/data/metrics?query=pd_cluster_status&start=1735093059&end=1735107459
+    client = PromotionPrometheusConnect(url='https://clinic.pingcap.com/clinic', disable_ssl=False,headers=headers)
     # print(client.custom_query(query='kube_node_labels{tenant="1372813089209061633",label_cluster="1379661944646413610",label_component="tidb"}'))
-    # current_time = datetime.datetime.now()
-    # one_day_ago = current_time - datetime.timedelta(days=1)
-    # # print(client.custom_query(query="all"))
-    # print(client.get_metric_aggregation(query="dbaas_tidb_cluster_info",
-    #         start_time=one_day_ago, end_time=current_time, step=60,
+
+    # 2024-12-25 10:17:39 - 2024-12-25 14:17:39
+    start_time = helpers.convert_datetime("25/12/2024 10:17:39") # 2024-12-23 15:00:00 - 2024-12-23 17:00:00
+    end_time = helpers.convert_datetime("25/12/2024 14:17:39")
+    # client.custom_querycl
+    print(client.custom_query_range_promotion(query='(time() - process_start_time_seconds{job="tidb"})',start_time=start_time, end_time=end_time, step=60))
+    # print(client.custom_query(query="pd_cluster_status"))
+    # print(client.get_metric_aggregation(query='max(sum(rate(process_cpu_seconds_total{component=~".*tikv"}[2m])) by (instance))',
+    #         start_time=start_time, end_time=end_time, step=60,
     #         operations=["max"])
     # )
-
+    #######################
     # token='eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJEWTNNVUpGTUVReU9VVTBSa0U1TXpCRk5rRkRRVEl3UkRNMU0wSXpNelJHUVRrMVFUbEZRZyJ9.eyJodHRwczovL3RpZGJjbG91ZC5jb20vbGFzdF9wYXNzd29yZF9yZXNldCI6IjIwMjQtMDctMThUMTI6MjY6NTYuMjA1WiIsImh0dHBzOi8vdGlkYmNsb3VkLmNvbS9sb2dpbl9yZWNlaXZlZF9hdCI6MTcyMTgwMTkwMjQ2OCwibG9naW5faGFzX29yZyI6IjEiLCJsb2dpbl9vcmdfdHlwZSI6InBlcnNvbmFsIiwibG9naW5fb3JnX2lkIjoiMSIsImxvZ2luX2NvbXBhbnlfbmFtZSI6IiIsImVtYWlsIjoieXVlY2hhbmdxaWFuZ0BwaW5nY2FwLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczovL3RpZGIuYXV0aDAuY29tLyIsImF1ZCI6IjZJWnRoQ2ZtUktJUEVuUVNUOGFEYnRNN1NHZE1uaVJsIiwiaWF0IjoxNzIxODAxOTAyLCJleHAiOjE3MjE4Mzc5MDIsInN1YiI6ImF1dGgwfDYxY2E3MzY4ZTk1Njc1MDA2ODJhZDE4MiIsImF0X2hhc2giOiJydUJMMVlEa25FbldzSDFzTDZYblJnIiwic2lkIjoicWhUYTJHczN4Y0VxN2VYdk9pZWFqZC1zTk83T0hOQkEiLCJub25jZSI6Ik5VV3dla2dKaU5Hb0JoWHNXWWZRWHd3dWdHd2JTRnV1In0.z0YZQhfWjbZiGGW_rwHNsh73XxIZkHvnB4BUWGslAPeNnsboSfTaveFzY003gVLliObs8ag2KP5a9SjuEsDqImlLHkvLNp0WvATrY3_bOGxzphwiU1Y1xjB-m9qnPV9XV-ps2FXMEF5_U88En5JfCUycfnMw97hzGgLIj7169h6z-vMTEAygGonGtG3RXcFkME9Z2hngdvvtqhdIEFCRQWe_q79OEQdfpj_rfxUktUsGgfJ1961y0n6lfLed88d7oIYv8a1Q0q6Nc6330Cq1CUPOgdikjWgPdWseK9PnZw9bWxHKniciu6VhNBr2rm65zdVewX0T9sCcGVINcNBXJg'
     #        eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlJEWTNNVUpGTUVReU9VVTBSa0U1TXpCRk5rRkRRVEl3UkRNMU0wSXpNelJHUVRrMVFUbEZRZyJ9
     # client = PrometheusConnect(url=url, disable_ssl=False,
@@ -65,14 +84,14 @@ if __name__ == '__main__':
     # print(client.custom_query('(time() - process_start_time_seconds{component="tidb"})'))
 # ----------------
 
-    conf = Configer("tidbcloud.yaml").set_conf()
-    logger = setup_logger(__name__, conf['logging']['file_name'], conf['logging']['level'])
-    tidb_cluster = TiDBCluster(conf)
+    # conf = Configer("tidbcloud.yaml").set_conf()
+    # logger = setup_logger(__name__, conf['logging']['file_name'], conf['logging']['level'])
+    # tidb_cluster = TiDBCluster(conf)
 
-    get_url='https://linguflow.pingcap.net/linguflow-api/interactions/e27b9e07-4a59-409d-874c-8b91d7e6805d'
-    ai_test = ai.ai.AI()
-    id=ai_test.post_request(["查询租户 1372813089209061633 下，所有集群的集群名称、集群 ID、集群版本"])
-    print(id)
+    # get_url='https://linguflow.pingcap.net/linguflow-api/interactions/e27b9e07-4a59-409d-874c-8b91d7e6805d'
+    # ai_test = ai.ai.AI()
+    # id=ai_test.post_request(["查询租户 1372813089209061633 下，所有集群的集群名称、集群 ID、集群版本"])
+    # print(id)
     # data=ai_test.get_data_with_retry(input_id={'id':'e27b9e07-4a59-409d-874c-8b91d7e6805d'})
     # print(data)
 
