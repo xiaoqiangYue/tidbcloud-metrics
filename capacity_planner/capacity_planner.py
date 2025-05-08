@@ -148,7 +148,8 @@ class CapacityPlanner(TiDBCluster):
             instances = []
             instance_type_list = []
 
-            if len(instances_info) > 0:
+            if len(instances_info) > 0 and len(instances_info) < 135:
+            # if len(instances_info) > 0:
                 for instance in instances_info:
                     instance_name = instance['metric']['label_kubernetes_io_hostname']
                     instance_type = instance['metric']['label_node_kubernetes_io_instance_type']

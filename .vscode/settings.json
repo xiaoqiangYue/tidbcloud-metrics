@@ -17,5 +17,8 @@
     "javascript.preferGoToSourceDefinition": true,
     "typescript.preferGoToSourceDefinition": true,
     "editor.definitionLinkOpensInPeek": true,
-    "python.experiments.optInto": []
+    "python.experiments.optInto": [],
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    }
 }

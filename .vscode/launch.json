@@ -11,16 +11,16 @@
             "program": "/Users/changqiangyue/Desktop/Summary/code_summary/code/tidbcloud-metrics/main.py",
             // "program": "/Users/changqiangyue/Desktop/Summary/code_summary/code/tidbcloud-metrics/test.py",
             "console": "integratedTerminal",
-            // "args": [
-            //     "inspection",
-            //     "-i",
-            //     "all",
-            // ]
             "args": [
-                "cluster-info",
-                "-b",
-                "talent",
+                "inspection",
+                "-i",
+                "all",
             ]
+            // "args": [
+            //     "cluster-info",
+            //     "-b",
+            //     "talent",
+            // ]
         }
     ]
 }

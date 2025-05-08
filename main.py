@@ -30,21 +30,15 @@ def inspection(inspection):
     #     click.confirm("Have you connected to FeiLian?", abort=True)
     # 1. 初始化 OP 配置
     conf = TidbOpConfig("tidbcloud.yaml").set_conf()
-    # 2. 初始化 TiDBOP 对象，对象包含以下能力
+    # 2. 初始化 TiDBOP 对象
     tidb_op_cluster = OpTidbCluster(conf)
-    #   a. OPTiDB 定义 getAPI function 用来获取可以触达 prome url ,已不需要
-
-    #   b. OPTiDB init 初始化通过 Prometheus API 获取 prome client 对象，已实现
-
-    #   c. OPTiDB 定义 getCustomMetric 用来获取监控数据，已实现
-
-    #   d. OPTiDB 定义 query，用来定义可以获取监控指标的种类，已实现
-
-    #   e. OPTiDB 定义固定功能，用来获取最终数据
     # https://clinic.pingcap.com/clinic/api/v1/data/metrics?query=tidb_server_connections&start=1734937200&end=1734944400&step=60
-    tidb_op_cluster.get_all_pd_instance()
-    #   f. OPTiDB 定义的固定功能包括：获取原始数据，容量评估，巡检
-    # 3. 
+    physical_metrics=tidb_op_cluster.get_physical_metrics()
+    helpers.save_list_to_csv(physical_metrics,filename="physical_metrics",format="row")
+    soft_metrics=tidb_op_cluster.get_soft_metrics()
+    # soft_metrics={'Hibernate Peers(awaken)': {'max': 7271.0, 'average': 2053.137037037037}, 'Approximate region size': {'max': 263995946.53538463, 'average': 257928625.25189564}, 'gRPC poll CPU(server.grpc-concurrency)': {'max': 0.7518333333307623, 'average': 0.5345541152263403}, 'Scheduler worker CPU(storage.scheduler-worker-pool-size)': {'max': 0.35833333333430345, 'average': 0.31194259259258833}, 'Store writer CPU(raftstore.store-io-pool-size)': {'max': 0.25466666666713234, 'average': 0.21081337448559967}, 'Unified read pool CPU(readpool.unified.max-thread-count)': {'max': 0.2946666666665503, 'average': 0.1770224279835463}, 'Raft store CPU(raftstore.store-pool-size)': {'max': 0.9101666666664339, 'average': 0.6311932098765238}, '99% Append log duration per server': {'max': 0.002171064201381145, 'average': 0.0013942784207883797}, '99% Commit log duration per server': {'max': 0.0046268036669784894, 'average': 0.003145537350951968}, '99% Apply log duration per server': {'max': 0.0011762149851399964, 'average': 0.0011399796779664828}, 'Scheduler pending commands': {'max': 15.0, 'average': 3.4962962962962965}, 'GC tasks duration': {'max': 0.32768, 'average': 0.0183775}, '99% Handle snapshot duration': {'max': 1.3041664000000002, 'average': 0.6096896}, 'Compaction pending bytes': {'max': 3691677897.0, 'average': 233959924.5}, 'Number of Regions(avg,max)': {'max': 37258.0, 'average': 36898.25555555556}, 'gc life time': {'max': 86400.0, 'average': 86400.0}, 'QPS(avg,max)': {'max': 14148.616666666667, 'average': 13872.506481481483}, 'active connections': {'max': 38.0, 'average': 26.7}, 'Stats Healthy Distribution[0,50)': {'max': 18.22222222222222, 'average': 13.9}, '999 Duration(insert)(avg,max)': {'max': 0.01115784501844997, 'average': 0.009561514230321038}, '999 Duration(select)(avg,max)': {'max': 0.007997720556824036, 'average': 0.007984084814030071}, '999 Duration(update)(avg,max)': {'max': 0.003998, 'average': 0.0014432222222222223}, 'max-replicas': '3', 'Label distribution': {'az:A': '3', 'az:B': '3', 'az:C': '3', 'host:h106': '1', 'host:h144': '1', 'host:h2.95': '1', 'host:h4.95': '1', 'host:h89': '1', 'host:h90': '1', 'host:h91': '1', 'host:h94': '1', 'host:h96': '1', 'zone:SG': '9'}, 'empty-region-count': {'max': 53.0, 'average': 53.0}, 'Scheduler is running': {'balance-hot-region-scheduler': '1', 'balance-leader-scheduler': '1', 'balance-region-scheduler': '1', 'balance-witness-scheduler': '1', 'evict-slow-store-scheduler': '1', 'split-bucket-scheduler': '1', 'transfer-witness-leader-scheduler': '1'}}
+    helpers.save_list_to_csv(soft_metrics,filename="soft_metrics",format="row")
+
 
 @cli.command()
 @click.option('--business', '-b', prompt=True, type=click.Choice(talent_bz_dynamic), default='talent', help='business dynamic')
