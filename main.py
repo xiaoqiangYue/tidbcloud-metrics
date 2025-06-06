@@ -11,17 +11,26 @@ import click
 from lark.app import LarkApp
 import utils
 from tidb_cluster.init_op_conf import TidbOpConfig
+# from tidb_cluster.init_ec2_conf import InitEC2
 
 # consts
 health_check_type = ["all", "tidb", "tikv", "pd", "tiflash"]
 talent_bz_dynamic = ["talent"]
 tidb_inspection = ["all"]
+init_ec2_user = ["all"]
 #k8s_prom_url = "https://www.ds.us-east-1.aws.observability.tidbcloud.com/internal/metrics/d5d1a915-1d37-22a7-82b8-8cb67cc57820" # hardcode first
 
 
 @click.group()
 def cli():
     click.echo('Welcome to TiDBCloud Capacity Planner and Health Checker!')
+
+# @cli.command()
+# @click.option('--init', '-n', prompt=True, type=click.Choice(init_ec2_user), default='all', help='init ec2')
+# def init_ec2(init):
+#     # 1. 初始化 OP 配置
+#     # 2. 初始化 TiDBOP 对象
+    
 
 @cli.command()
 @click.option('--inspection', '-i', prompt=True, type=click.Choice(tidb_inspection), default='all', help='tidb inspection')

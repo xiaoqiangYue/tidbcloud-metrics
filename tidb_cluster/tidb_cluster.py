@@ -167,7 +167,8 @@ class TiDBCluster:
 
     def get_access_point_from_cloud_prom(self):
         cloud = CloudPromComponentMetricsQuery()
-        tidb_uptime_metrics = self.cloud_prom_client.get_vector_result_raw(cloud.tidb_uptime)
+        tidb_uptime_metrics = self.cloud_prom_client.get_vector_result_raw_range(cloud.tidb_uptime)
+        # tidb_uptime_metrics = self.cloud_prom_client.get_vector_result_raw(cloud.tidb_uptime)
         access_point_set = set()
         access_point_ids = []
         for item in tidb_uptime_metrics:

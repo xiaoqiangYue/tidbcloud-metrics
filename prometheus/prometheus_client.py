@@ -63,6 +63,18 @@ class PrometheusClient:
         else:
             self.logger.debug("No metrics")
             return None, None
+    def get_capacity_n_count_range(self, request):
+        res = self.client.custom_query_range(request['query_capacity'],self.start_time,self.end_time,self.step)
+        # self.logger.debug("capacity and count: {}".format(res))
+        if res is not None and len(res) > 0:
+            instance_cnt = len(res)
+            value = res[0]['values'][0]
+            capacity = value[1]
+            return capacity, instance_cnt
+        else:
+            self.logger.debug("No metrics")
+            return None, None
+
 
     def get_metrics(self, query):
         res = self.client.custom_query(query)
@@ -87,6 +99,10 @@ class PrometheusClient:
 
     def get_vector_result_raw(self, query):
         results = self.client.custom_query(query)
+        return results
+    
+    def get_vector_result_raw_range(self, query):
+        results = self.client.custom_query_range(query,self.start_time,self.end_time,self.step)
         return results
 
     def get_cluster_prom_base_url(self):
