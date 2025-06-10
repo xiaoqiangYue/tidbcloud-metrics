@@ -27,7 +27,8 @@ def keep_same_headers(data, headers):
     return formatted_data
 
 def convert_datetime(datetime_str):
-    datetime_object = datetime.strptime(datetime_str, '%d/%m/%Y %H:%M:%S')
+    # datetime_object = datetime.strptime(datetime_str, '%d/%m/%Y %H:%M:%S')
+    datetime_object = datetime.strptime(datetime_str, "%Y-%m-%d %H:%M:%S")
     return datetime_object
 
 def save_dict_to_csv(data, filename,folder="data",format="row"):

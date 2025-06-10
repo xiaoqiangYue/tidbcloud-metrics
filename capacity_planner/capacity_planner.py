@@ -158,8 +158,8 @@ class CapacityPlanner(TiDBCluster):
                     instance_type_list.append(instance_type)
                 # instance_filter = '|'.join(instances)
                 # 如果实例数量超过 119 个，只取前 119 个用于拼接
-                # limited_instances = instances[:119]
-                limited_instances = instances
+                limited_instances = instances[:119]
+                # limited_instances = instances
                 instance_filter = '|'.join(limited_instances)
                 self.logger.debug("instance_filter {}".format(instance_filter))
 

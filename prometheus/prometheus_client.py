@@ -1,4 +1,5 @@
 from prometheus_api_client import PrometheusConnect
+from prometheus_api_client.exceptions import PrometheusApiClientException
 import sys
 from utils import logger, helpers
 
@@ -96,6 +97,23 @@ class PrometheusClient:
                 for k, v in result['metric'].items():
                     metrics[v] = result['value'][1]
         return metrics
+    
+    def get_vector_metrics_many_range(self, query):
+        metrics = {}
+        try:
+            results = self.client.custom_query_range(query, self.start_time, self.end_time, 3600)
+        except PrometheusApiClientException as e:
+            if "404" in str(e):
+                print("集群已删除，跳过该查询。")
+                results = []  # 可选：返回空结果以兼容后续逻辑
+            else:
+                raise  # 非 404 异常，继续抛出
+    
+        if results is not None and len(results) > 0:
+            for result in results:
+                k=result['metric']['component']
+                metrics[k]=result['values'][0][1]
+        return metrics
 
     def get_vector_result_raw(self, query):
         results = self.client.custom_query(query)
@@ -103,6 +121,7 @@ class PrometheusClient:
     
     def get_vector_result_raw_range(self, query):
         results = self.client.custom_query_range(query,self.start_time,self.end_time,self.step)
+        # results = self.client.custom_query(query)
         return results
 
     def get_cluster_prom_base_url(self):

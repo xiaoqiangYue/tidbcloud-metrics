@@ -27,7 +27,7 @@ class TiDBCluster:
     def get_dedicated_clusters_by_tenant_from_k8s(self):
         cluster_list = []
         k8s = K8sPromQueryInstance(self.conf['cluster_info'])
-        results = self.k8s_prom_client.get_vector_result_raw(k8s.dedicated_cluster_by_tenant_query)
+        results = self.k8s_prom_client.get_vector_result_raw_range(k8s.dedicated_cluster_by_tenant_query)
         for result in results:
             cluster = {}
             cluster['tenant_id'] = result['metric']['label_tenant']
@@ -42,7 +42,7 @@ class TiDBCluster:
     def get_clusters_basic_info_by_tenant_from_k8s(self):
         cluster_basic_info = []
         k8s = K8sPromQueryInstance(self.conf['cluster_info'])
-        results = self.k8s_prom_client.get_vector_result_raw(k8s.dedicated_cluster_by_tenant_query)
+        results = self.k8s_prom_client.get_vector_result_raw_range(k8s.dedicated_cluster_by_tenant_query)
         for result in results:
             cluster = {}
             cluster['tenant_id'] = result['metric']['label_tenant']
@@ -66,7 +66,8 @@ class TiDBCluster:
     
     def get_components_from_cloud_use_cluster_info(self):
         cloud_prom_client = PrometheusClient(self.conf, 'cloud')
-        components = cloud_prom_client.get_vector_metrics_many(component_query)
+        self.logger.debug('tenant_id: {},project_id: {},cluster_id: {},'.format(self.conf['cluster_info']['tenant_id'],self.conf['cluster_info']['project_id'],self.conf['cluster_info']['cluster_id']))
+        components = cloud_prom_client.get_vector_metrics_many_range(component_query)
         self.logger.debug('components get from cloud: {}'.format(components))
         return components
 
@@ -101,16 +102,16 @@ class TiDBCluster:
             self.conf['cluster_info']['tenant_id'] = cluster['tenant_id']
             self.conf['cluster_info']['project_id'] = cluster['project_id']
             self.conf['cluster_info']['cluster_id'] = cluster['cluster_id']
-            
-            instances_info = self.get_components_from_cloud_use_cluster_info()
-
-            instances_info['qps'] = self.get_qps_from_cloud_use_cluster_info(start_time,end_time,operations)
-            instances_info['data_size'] = self.get_data_size_from_cloud_use_cluster_info(start_time,end_time,operations)
-            # k8s = K8sPromQueryInstance(self.conf['cluster_info'], None, component)
-            # self.k8s_prom_client = PrometheusClient(self.conf, 'k8s', False)
-            # instances_info = self.k8s_prom_client.get_vector_result_raw(k8s.component_instance_query)
-            cluster_info = {**cluster,**instances_info}
-            clusters_basic_info.append(cluster_info)
+            result = self.get_components_from_cloud_use_cluster_info()
+            if result:
+                instances_info = result
+                instances_info['qps'] = self.get_qps_from_cloud_use_cluster_info(start_time,end_time,operations)
+                instances_info['data_size'] = self.get_data_size_from_cloud_use_cluster_info(start_time,end_time,operations)
+                # k8s = K8sPromQueryInstance(self.conf['cluster_info'], None, component)
+                # self.k8s_prom_client = PrometheusClient(self.conf, 'k8s', False)
+                # instances_info = self.k8s_prom_client.get_vector_result_raw(k8s.component_instance_query)
+                cluster_info = {**cluster,**instances_info}
+                clusters_basic_info.append(cluster_info)
         return clusters_basic_info
 
     def get_instances_by_component(self, component):

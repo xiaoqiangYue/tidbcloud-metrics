@@ -16,16 +16,16 @@
             //     "-i",
             //     "all",
             // ]
-            // "args": [
-            //     "cluster-info",
-            //     "-b",
-            //     "talent",
-            // ]
             "args": [
-                "capacity",
-                "-m",
-                "all"
+                "cluster-info",
+                "-b",
+                "talent",
             ]
+            // "args": [
+            //     "capacity",
+            //     "-m",
+            //     "all"
+            // ]
         }
     ]
 }
