@@ -6,6 +6,7 @@ from prometheus.k8s_prom_query import K8sPromQueryInstance
 from prometheus.cloud_prom_query import *
 from utils import logger
 from aws.aws_ec2_capacity import ec2_resource_capacity
+from datetime import timedelta
 
 
 class TiDBCluster:
@@ -66,6 +67,7 @@ class TiDBCluster:
     
     def get_components_from_cloud_use_cluster_info(self):
         cloud_prom_client = PrometheusClient(self.conf, 'cloud')
+        cloud_prom_client.start_time = cloud_prom_client.end_time - timedelta(minutes=30)
         self.logger.debug('tenant_id: {},project_id: {},cluster_id: {},'.format(self.conf['cluster_info']['tenant_id'],self.conf['cluster_info']['project_id'],self.conf['cluster_info']['cluster_id']))
         components = cloud_prom_client.get_vector_metrics_many_range(component_query)
         self.logger.debug('components get from cloud: {}'.format(components))

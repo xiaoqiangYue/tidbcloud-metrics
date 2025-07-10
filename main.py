@@ -17,7 +17,7 @@ from tidb_cluster.init_op_conf import TidbOpConfig
 health_check_type = ["all", "tidb", "tikv", "pd", "tiflash"]
 talent_bz_dynamic = ["talent"]
 tidb_inspection = ["all"]
-init_ec2_user = ["all"]
+init_ec2_all = ["all"]
 #k8s_prom_url = "https://www.ds.us-east-1.aws.observability.tidbcloud.com/internal/metrics/d5d1a915-1d37-22a7-82b8-8cb67cc57820" # hardcode first
 
 
@@ -26,10 +26,11 @@ def cli():
     click.echo('Welcome to TiDBCloud Capacity Planner and Health Checker!')
 
 # @cli.command()
-# @click.option('--init', '-n', prompt=True, type=click.Choice(init_ec2_user), default='all', help='init ec2')
+# @click.option('--init', '-n', prompt=True, type=click.Choice(init_ec2_all), default='all', help='init ec2')
 # def init_ec2(init):
-#     # 1. 初始化 OP 配置
-#     # 2. 初始化 TiDBOP 对象
+#     # 1. 初始化 init ec2 对象
+#     # init_ec2 = InitEC2("tidbcloud.yaml")
+#     # init_ec2.execute_all()
     
 
 @cli.command()

@@ -49,27 +49,27 @@ if __name__ == '__main__':
     # cloud
     # https://www.ds.us-east-1.aws.observability.tidbcloud.com/external/metrics/tidbcloud/tenant/1372813089209061633/project/1372813089454544954/application/1379661944646416076
     ###############
-    logging.basicConfig(level=logging.DEBUG)
-    logging.getLogger("requests.packages.urllib3").setLevel(logging.DEBUG)
-    # url='https://clinic.pingcap.com'
-    url='https://clinic.pingcap.com/clinic'
-    token='eyJrIjoiNHM4OTdkNHFheWZ0N3RodyIsInUiOjI0MCwiaWQiOjB9Cg=='
-    headers={
-        # "User-Agent": "PostmanRuntime/7.40.0",
-        "Authorization": "Bearer eyJrIjoiNHM4OTdkNHFheWZ0N3RodyIsInUiOjI0MCwiaWQiOjB9Cg==",
-        "X-OrgType":"op",
-        "X-OrgID":"1372813089196980697",
-        "X-ClusterID":"7245971497785794815"
-    }
+    # logging.basicConfig(level=logging.DEBUG)
+    # logging.getLogger("requests.packages.urllib3").setLevel(logging.DEBUG)
+    # # url='https://clinic.pingcap.com'
+    # url='https://clinic.pingcap.com/clinic'
+    # token='eyJrIjoiNHM4OTdkNHFheWZ0N3RodyIsInUiOjI0MCwiaWQiOjB9Cg=='
+    # headers={
+    #     # "User-Agent": "PostmanRuntime/7.40.0",
+    #     "Authorization": "Bearer eyJrIjoiNHM4OTdkNHFheWZ0N3RodyIsInUiOjI0MCwiaWQiOjB9Cg==",
+    #     "X-OrgType":"op",
+    #     "X-OrgID":"1372813089196980697",
+    #     "X-ClusterID":"7245971497785794815"
+    # }
     # https://clinic.pingcap.com/clinic/api/v1/data/metrics?query=pd_cluster_status&start=1735093059&end=1735107459
-    client = PromotionPrometheusConnect(url='https://clinic.pingcap.com/clinic', disable_ssl=False,headers=headers)
+    # client = PromotionPrometheusConnect(url='https://clinic.pingcap.com/clinic', disable_ssl=False,headers=headers)
     # print(client.custom_query(query='kube_node_labels{tenant="1372813089209061633",label_cluster="1379661944646413610",label_component="tidb"}'))
 
     # 2024-12-25 10:17:39 - 2024-12-25 14:17:39
-    start_time = helpers.convert_datetime("25/12/2024 10:17:39") # 2024-12-23 15:00:00 - 2024-12-23 17:00:00
-    end_time = helpers.convert_datetime("25/12/2024 14:17:39")
+    # start_time = helpers.convert_datetime("25/12/2024 10:17:39") # 2024-12-23 15:00:00 - 2024-12-23 17:00:00
+    # end_time = helpers.convert_datetime("25/12/2024 14:17:39")
     # client.custom_querycl
-    print(client.custom_query_range_promotion(query='(time() - process_start_time_seconds{job="tidb"})',start_time=start_time, end_time=end_time, step=60))
+    # print(client.custom_query_range_promotion(query='(time() - process_start_time_seconds{job="tidb"})',start_time=start_time, end_time=end_time, step=60))
     # print(client.custom_query(query="pd_cluster_status"))
     # print(client.get_metric_aggregation(query='max(sum(rate(process_cpu_seconds_total{component=~".*tikv"}[2m])) by (instance))',
     #         start_time=start_time, end_time=end_time, step=60,
@@ -88,12 +88,12 @@ if __name__ == '__main__':
     # logger = setup_logger(__name__, conf['logging']['file_name'], conf['logging']['level'])
     # tidb_cluster = TiDBCluster(conf)
 
-    # get_url='https://linguflow.pingcap.net/linguflow-api/interactions/e27b9e07-4a59-409d-874c-8b91d7e6805d'
-    # ai_test = ai.ai.AI()
-    # id=ai_test.post_request(["查询租户 1372813089209061633 下，所有集群的集群名称、集群 ID、集群版本"])
-    # print(id)
-    # data=ai_test.get_data_with_retry(input_id={'id':'e27b9e07-4a59-409d-874c-8b91d7e6805d'})
-    # print(data)
+    get_url='https://linguflow.pingcap.net/linguflow-api/interactions/e27b9e07-4a59-409d-874c-8b91d7e6805d'
+    ai_test = ai.ai.AI()
+    id=ai_test.post_request(["查询租户 1372813089209061633 下，所有集群的集群名称、集群 ID、集群版本"])
+    print(id)
+    data=ai_test.get_data_with_retry(input_id=id)
+    print(data)
 
     # print(tidb_cluster.csv_file_name)
     # # 1. 获取租户下所有的 clusters

@@ -1,5 +1,6 @@
 import paramiko
 import time
+from utils import helpers
 
 class InitEC2:
 
@@ -8,22 +9,23 @@ class InitEC2:
         初始化 TidbOpConfig 类，加载配置文件并将其封装为类的属性。
         """
         self.config_file = config_file
+        self.conf = self.set_conf()
+        self.hosts = self.conf['host_list'].split(',')
+        self.root_user = self.conf['root_user']
+        self.root_password = self.conf['root_password']
+        self.target_user = self.conf['target_user']
+        self.target_password = self.conf['target_password']
+        self.public_keys = {}
     
     def set_conf(self):
         self.conf = helpers.parse_yaml(self.config_file).get('initop')
         helpers.validate_non_empty_string(
-            self.conf['metrics_api_url'],
-            'tidbop.metrics_api_url',
+            self.conf['host_list'],
+            'initop.host_list',
             allow_none=False)
                
         return self.conf
-    # def __init__(self, hosts, root_user, root_password, target_user, target_password):
-    #     self.hosts = hosts
-    #     self.root_user = root_user
-    #     self.root_password = root_password
-    #     self.target_user = target_user
-    #     self.target_password = target_password
-    #     self.public_keys = {}
+    
 
     def ssh_connect(self, host):
         """建立 SSH 连接"""
