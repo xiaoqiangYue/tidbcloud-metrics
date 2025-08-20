@@ -14,17 +14,17 @@ initop:
   target_password: xq123456
   host_list: [172.16.201.161,172.16.201.64,172.16.201.184,172.16.201.238,172.16.201.127,172.16.201.225,172.16.201.241,172.16.201.24,172.16.201.211]
 
-# 2025-04-22 03:10:00 - 2025-04-22 03:18:00
+# 2025-07-14 18:00:00 - 2025-07-15 02:00:00
 
 tidbop:
   metrics_api_url: https://clinic.pingcap.com/clinic
-  start_time: "2025-04-22 03:10:00"
-  end_time: "2025-04-22 03:18:00"
+  start_time: "2025-07-05 00:00:00"
+  end_time: "2025-07-05 23:59:59"
   step_in_seconds: 60s
   headers: 
     X-OrgType: op
     X-OrgID: "1372813089196919946"
-    X-ClusterID: '7425918018706752005'
+    X-ClusterID: '7327244184585142824'
     Authorization: Bearer eyJrIjoiNHM4OTdkNHFheWZ0N3RodyIsInUiOjI0MCwiaWQiOjB9Cg==
 
   # start_time: 06/05/2025 00:00:00
